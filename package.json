@@ -1,0 +1,24 @@
+{
+  "name": "simple-js-game",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skatpgusskat/simple-js-game.git"
+  },
+  "author": "Nam Se Hyun <skatpgusskat@naver.com>",
+  "dependencies": {
+    "socket.io": "^1.4.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node --harmony_destructuring index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/skatpgusskat/simple-js-game/issues"
+  },
+  "homepage": "https://github.com/skatpgusskat/simple-js-game#readme"
+}

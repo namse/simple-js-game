@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en" ng-app>
+  <head>
+    <title>Chat Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-responsive.min.css">
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    
+    
+  </head>
+  <body>
+    <div id='container' style="height: 100%; width: 100%; position: absolute; top: 0; left: 0;">
+      <div id="user-container">
+        <input type="text" id="name" value="name">
+        <div id='users-data'></div>
+      </div>
+      <div id='target' style="background-color: red; position: absolute;"></div>
+    </div>
+    
+    <script>
+      var socket = io.connect();
+      
+      socket.on('broadcast', function(packet) {
+        var value = '';
+        packet.usersData.forEach(function(userData) {
+          value += userData.name + ' : ' + userData.score + '\n';
+        });
+        $('#users-data').html(value.replace(/\n/g,"<br />"));
+        
+        if(packet.target) {
+          var x = packet.target.x;
+          var y = packet.target.y;
+          var radius = packet.target.radius;
+          var $container = $('#container');
+          var height = $container.height();
+          var width = $container.width();
+          $('#target').show()
+            .offset({ top: height * (y - radius) / 100, left: width * (x - radius) / 100 })
+            .width(radius * 2 * width / 100)
+            .height(radius * 2 * height / 100);
+        } else {
+          $('#target').hide();
+        }
+      });
+      
+      $('#name').change(function(){
+        var name = $(this).val();
+        socket.emit('setName', {
+          name,
+        });
+      });
+      
+      $('#target').click(function(e) {
+        var $container = $('#container');
+        var height = $container.height();
+        var width = $container.width();
+        var x = e.clientX  / width * 100;
+        var y = e.clientY / height * 100;
+        console.log(x, y);
+        socket.emit('hit', {
+          x,
+          y,
+        });
+      });
+    </script>
+  </body>
+</html>
