@@ -1,0 +1,23 @@
+#container{
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#target{
+  background-color: red;
+  position: absolute;
+}
+#status-panel{
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 50%;
+}
+.user-data span{
+  position: absolute;
+  top: 0px;
+  left: 102%;
+  color: black;
+}
