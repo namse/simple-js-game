@@ -4,7 +4,9 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
-app.use(express.static('client'));
+const config = require('./config.js');
+
+app.use(express.static(config.app.express.static));
 
 app.get('/', function (req, res) {
     res.sendfile('index.html');
@@ -78,7 +80,7 @@ io.on('connection', function (socket) {
     });
 });
 
-http.listen(process.env.PORT, function () {
-    console.log(`listening on *:${process.env.PORT}`);
+http.listen(process.env.PORT || config.app.port, function () {
+    console.log(`listening on *:${process.env.PORT || config.app.port}`);
 });
 
